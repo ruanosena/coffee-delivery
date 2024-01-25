@@ -30,4 +30,15 @@ export const GlobalStyle = createGlobalStyle`
     line-height: 1.3;
     font-size: 1rem;
   }
+
+  @media (max-width: 768px) {
+    html {
+      font-size: 87.5%;
+    }
+  }
+  @media (max-width: 480px) {
+    html {
+      font-size: 75%;
+    }
+  }
 `;
