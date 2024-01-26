@@ -4,10 +4,11 @@ import { ChangeEvent, InputHTMLAttributes, useState } from "react";
 
 interface CounterInputProps extends InputHTMLAttributes<HTMLInputElement> {
 	onChangeValue: (value: number) => void;
+	initialCount: number;
 }
 
-export function CounterInput({ onChangeValue, ...props }: CounterInputProps) {
-	const [inputValue, setInputValue] = useState(1);
+export function CounterInput({ onChangeValue, initialCount, ...props }: CounterInputProps) {
+	const [inputValue, setInputValue] = useState(initialCount);
 
 	function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
 		const value = Number(event.target.value);

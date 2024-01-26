@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { ButtonIcon } from "../../../../components/ButtonIcon";
 
 export const CardContainer = styled.li`
@@ -76,7 +76,25 @@ export const Actions = styled.div`
 	column-gap: 0.5rem;
 `;
 
-export const CartButton = styled(ButtonIcon)`
+interface CartButtonStyleProps {
+	isAdding: boolean;
+}
+
+const translate = keyframes`
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(50%);
+	}
+`;
+
+export const CartButton = styled(ButtonIcon)<CartButtonStyleProps>`
 	background: ${(props) => props.theme["purple-dark"]};
 	color: ${(props) => props.theme["base-card"]};
+	${(props) =>
+		props.isAdding &&
+		css`
+			animation: ${translate} .5s forwards 1;
+		`}
 `;

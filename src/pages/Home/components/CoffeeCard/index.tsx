@@ -15,12 +15,32 @@ import {
 import { CounterInput } from "../../../../components/CounterInput";
 import { Coffee } from "../../../../data/coffees";
 import { CurrencyFormatter } from "../../../../utils/CurrencyFormatter";
+import { useContext, useState } from "react";
+import { CartContext } from "../../../../contexts/CartContext";
 
 interface CoffeeCardProps {
 	coffee: Coffee;
 }
 
 export function CoffeeCard({ coffee }: CoffeeCardProps) {
+	const [isAdding, setIsAdding] = useState(false);
+	const [quantity, setQuantity] = useState<number>(1);
+	const { addProduct } = useContext(CartContext);
+
+	function addProductToCart() {
+		if (quantity) {
+			setIsAdding(true);
+			addProduct({
+				id: coffee.id,
+				image: coffee.image,
+				name: coffee.title,
+				price: coffee.price,
+				quantity,
+			});
+			setTimeout(() => setIsAdding(false), 1000);
+		}
+	}
+
 	return (
 		<CardContainer>
 			<CardImg src={coffee.image} alt={`Xícara de ${coffee.title.toLowerCase()}`} />
@@ -36,8 +56,8 @@ export function CoffeeCard({ coffee }: CoffeeCardProps) {
 					<PriceCurrency>R$</PriceCurrency> {CurrencyFormatter(coffee.price)}
 				</Price>
 				<Actions>
-					<CounterInput onChangeValue={(value) => value} />
-					<CartButton icon={ShoppingCart} />
+					<CounterInput min={1} initialCount={quantity} onChangeValue={setQuantity} />
+					<CartButton isAdding={isAdding} icon={ShoppingCart} onClick={addProductToCart} />
 				</Actions>
 			</CardFooter>
 		</CardContainer>

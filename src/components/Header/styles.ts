@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { ButtonIcon } from "../ButtonIcon";
 
 export const HeaderContainer = styled.header`
@@ -15,9 +15,35 @@ export const HeaderContainer = styled.header`
 	}
 `;
 
-export const CartButton = styled(ButtonIcon)`
+interface CartButtonStyleProps {
+	quantity: number;
+}
+
+export const CartButton = styled(ButtonIcon)<CartButtonStyleProps>`
+	position: relative;
 	background: ${(props) => props.theme["yellow-light"]};
 	color: ${(props) => props.theme["yellow-dark"]};
+
+	${(props) =>
+		props.quantity > 0 &&
+		css`
+			&::after {
+				content: "${props.quantity > 9 ? "9+" : props.quantity}";
+				position: absolute;
+				top: -0.6rem;
+				right: -0.6rem;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				width: 1.25rem;
+				height: 1.25rem;
+				border-radius: 50%;
+				background: ${props.theme["yellow-dark"]};
+				font-size: 0.75rem;
+				font-weight: bold;
+				color: ${props.theme.white};
+			}
+		`}
 `;
 
 export const MapLocation = styled.div`

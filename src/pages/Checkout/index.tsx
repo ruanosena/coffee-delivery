@@ -15,18 +15,22 @@ import {
 	CheckoutItemHighlight,
 } from "./styles";
 import { useTheme } from "styled-components";
+import { NavLink } from "react-router-dom";
 import { Input } from "./components/Input";
 import { Selectable } from "./components/Selectable";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { CartItem } from "./components/CartItem";
 import { Button } from "../../components/Button";
-import { NavLink } from "react-router-dom";
+import { CartContext } from "../../contexts/CartContext";
+import { CurrencyFormatter } from "../../utils/CurrencyFormatter";
 
 type PaymentMethods = "credit_card" | "debit_card" | "money";
 
 export function Checkout() {
-	const theme = useTheme();
 	const [paymentMethod, setPaymentMethod] = useState<PaymentMethods>();
+	const theme = useTheme();
+	const [deliveryPrice] = useState(350);
+	const { cart, cartTotalPrice } = useContext(CartContext);
 
 	return (
 		<MainContainer>
@@ -96,22 +100,24 @@ export function Checkout() {
 			<Wrapper>
 				<AreaTitle>Cafés selecionados</AreaTitle>
 				<Order>
-					<CartItem />
-					<Divider />
-					<CartItem />
-					<Divider />
+					{cart.map((item) => (
+						<>
+							<CartItem key={item.id} item={item} />
+							<Divider />
+						</>
+					))}
 					<CheckoutSection>
 						<CheckoutItemHighlight>
 							<span>Total dos itens</span>
-							<span>R$ 19,80</span>
+							<span>R$ {CurrencyFormatter(cartTotalPrice)}</span>
 						</CheckoutItemHighlight>
 						<CheckoutItemHighlight>
 							<span>Entrega</span>
-							<span>R$ 3,50</span>
+							<span>R$ {CurrencyFormatter(deliveryPrice)}</span>
 						</CheckoutItemHighlight>
 						<CheckoutItemFeatured>
 							<span>Total</span>
-							<span>R$ 23,30</span>
+							<span>R$ {CurrencyFormatter(cartTotalPrice + deliveryPrice)}</span>
 						</CheckoutItemFeatured>
 					</CheckoutSection>
 					<NavLink to="/order" title="Pedido" style={{ textDecoration: "none" }}>
