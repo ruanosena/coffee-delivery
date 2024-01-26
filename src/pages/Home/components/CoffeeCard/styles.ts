@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { ButtonIcon } from "../../../../components/ButtonIcon";
 
 export const CardContainer = styled.li`
 	display: flex;
@@ -73,15 +74,9 @@ export const PriceCurrency = styled.span`
 export const Actions = styled.div`
 	display: flex;
 	column-gap: 0.5rem;
+`;
 
-	> button {
-		border: 0;
-		background: ${(props) => props.theme["purple-dark"]};
-		color: ${(props) => props.theme["base-card"]};
-		border-radius: 6px;
-		width: 38px;
-		height: 38px;
-		line-height: 1;
-		cursor: pointer;
-	}
+export const CartButton = styled(ButtonIcon)`
+	background: ${(props) => props.theme["purple-dark"]};
+	color: ${(props) => props.theme["base-card"]};
 `;

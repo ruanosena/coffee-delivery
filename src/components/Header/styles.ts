@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { ButtonIcon } from "../ButtonIcon";
 
 export const HeaderContainer = styled.header`
 	display: flex;
@@ -14,14 +15,9 @@ export const HeaderContainer = styled.header`
 	}
 `;
 
-export const CartIcon = styled.div`
-	height: 2.375rem;
-	border: 0;
-	cursor: pointer;
-	padding: 0.5rem;
-	border-radius: 6px;
-	line-height: 1;
+export const CartButton = styled(ButtonIcon)`
 	background: ${(props) => props.theme["yellow-light"]};
+	color: ${(props) => props.theme["yellow-dark"]};
 `;
 
 export const MapLocation = styled.div`

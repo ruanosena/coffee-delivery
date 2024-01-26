@@ -4,6 +4,7 @@ import {
 	CardContainer,
 	CardFooter,
 	CardImg,
+	CartButton,
 	Description,
 	Price,
 	PriceCurrency,
@@ -36,9 +37,7 @@ export function CoffeeCard({ coffee }: CoffeeCardProps) {
 				</Price>
 				<Actions>
 					<CounterInput onChangeValue={(value) => value} />
-					<button type="button">
-						<ShoppingCart weight="fill" size={20} />
-					</button>
+					<CartButton icon={ShoppingCart} />
 				</Actions>
 			</CardFooter>
 		</CardContainer>

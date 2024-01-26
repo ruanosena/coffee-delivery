@@ -18,14 +18,16 @@ export function CounterInput({ onChangeValue, ...props }: CounterInputProps) {
 
 	function handleSubtractOne() {
 		setInputValue((state) => {
-			state = state <= 0 ? 0 : state - 1;
+			const min = Number(props.min) || 0;
+			state = state <= min ? min : state - 1;
 			if (state != inputValue) onChangeValue(state);
 			return state;
 		});
 	}
 	function handleAddOne() {
 		setInputValue((state) => {
-			state = state >= 99 ? 99 : state + 1;
+			const max = Number(props.max) || 99;
+			state = state >= max ? max : state + 1;
 			if (state != inputValue) onChangeValue(state);
 			return state;
 		});
