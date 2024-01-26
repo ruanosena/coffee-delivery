@@ -20,6 +20,7 @@ import { Selectable } from "./components/Selectable";
 import { useState } from "react";
 import { CartItem } from "./components/CartItem";
 import { Button } from "../../components/Button";
+import { NavLink } from "react-router-dom";
 
 type PaymentMethods = "credit_card" | "debit_card" | "money";
 
@@ -113,9 +114,14 @@ export function Checkout() {
 							<span>R$ 23,30</span>
 						</CheckoutItemFeatured>
 					</CheckoutSection>
-					<Button size="normal" style={{ color: theme.white, background: theme.yellow }}>
-						Confirmar pedido
-					</Button>
+					<NavLink to="/order" title="Pedido" style={{ textDecoration: "none" }}>
+						<Button
+							size="normal"
+							style={{ color: theme.white, background: theme.yellow, width: "100%" }}
+						>
+							Confirmar pedido
+						</Button>
+					</NavLink>
 				</Order>
 			</Wrapper>
 		</MainContainer>
