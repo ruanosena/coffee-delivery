@@ -92,9 +92,14 @@ const translate = keyframes`
 export const CartButton = styled(ButtonIcon)<CartButtonStyleProps>`
 	background: ${(props) => props.theme["purple-dark"]};
 	color: ${(props) => props.theme["base-card"]};
+
+	&:disabled {
+		cursor: not-allowed;
+	}
+
 	${(props) =>
 		props.isAdding &&
 		css`
-			animation: ${translate} .5s forwards 1;
+			animation: ${translate} 0.5s forwards 1;
 		`}
 `;

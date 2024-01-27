@@ -9,28 +9,36 @@ import {
 	CardTitle,
 	CardBody,
 	Order,
-	Divider,
 	CheckoutSection,
 	CheckoutItemFeatured,
 	CheckoutItemHighlight,
+	CardForm,
+	Input,
 } from "./styles";
 import { useTheme } from "styled-components";
-import { NavLink } from "react-router-dom";
-import { Input } from "./components/Input";
+import { useNavigate } from "react-router-dom";
 import { Selectable } from "./components/Selectable";
 import { useContext, useState } from "react";
 import { CartItem } from "./components/CartItem";
 import { Button } from "../../components/Button";
 import { CartContext } from "../../contexts/CartContext";
 import { CurrencyFormatter } from "../../utils/CurrencyFormatter";
+import { useForm } from "react-hook-form";
 
 type PaymentMethods = "credit_card" | "debit_card" | "money";
 
 export function Checkout() {
 	const [paymentMethod, setPaymentMethod] = useState<PaymentMethods>();
-	const theme = useTheme();
 	const [deliveryPrice] = useState(350);
+	const theme = useTheme();
 	const { cart, cartTotalPrice } = useContext(CartContext);
+	const navigate = useNavigate();
+	const { register, handleSubmit } = useForm();
+
+	function handleConfirmOrder(data: any) {
+		console.log(data);
+		navigate("/order");
+	}
 
 	return (
 		<MainContainer>
@@ -46,15 +54,15 @@ export function Checkout() {
 							<CardSubtitle>Informe o endereço onde deseja receber seu pedido</CardSubtitle>
 						</div>
 					</CardHeader>
-					<CardBody>
-						<Input placeholder="CEP" />
-						<Input placeholder="Rua" style={{ width: "100%" }} />
-						<Input placeholder="Número" />
-						<Input placeholder="Complemento" style={{ flex: 1 }} />
-						<Input placeholder="Bairro" />
-						<Input placeholder="Cidade" style={{ flex: 1 }} />
-						<Input placeholder="UF" style={{ flexShrink: 1, maxWidth: "3.75rem" }} />
-					</CardBody>
+					<CardForm>
+						<Input {...register("cep")} placeholder="CEP" />
+						<Input {...register("rua")} placeholder="Rua" style={{ width: "100%" }} />
+						<Input {...register("numero")} placeholder="Número" />
+						<Input {...register("complemento")} placeholder="Complemento" style={{ flex: 1 }} />
+						<Input {...register("bairro")} placeholder="Bairro" />
+						<Input {...register("cidade")} placeholder="Cidade" style={{ flex: 1 }} />
+						<Input {...register("uf")} placeholder="UF" style={{ maxWidth: "3.75rem" }} />
+					</CardForm>
 				</Card>
 				<Card>
 					<CardHeader>
@@ -101,10 +109,7 @@ export function Checkout() {
 				<AreaTitle>Cafés selecionados</AreaTitle>
 				<Order>
 					{cart.map((item) => (
-						<>
-							<CartItem key={item.id} item={item} />
-							<Divider />
-						</>
+						<CartItem key={item.id} item={item} />
 					))}
 					<CheckoutSection>
 						<CheckoutItemHighlight>
@@ -120,14 +125,15 @@ export function Checkout() {
 							<span>R$ {CurrencyFormatter(cartTotalPrice + deliveryPrice)}</span>
 						</CheckoutItemFeatured>
 					</CheckoutSection>
-					<NavLink to="/order" title="Pedido" style={{ textDecoration: "none" }}>
-						<Button
-							size="normal"
-							style={{ color: theme.white, background: theme.yellow, width: "100%" }}
-						>
-							Confirmar pedido
-						</Button>
-					</NavLink>
+					{/* <NavLink to="/order" title="Pedido" style={{ textDecoration: "none" }}> */}
+					<Button
+						size="normal"
+						style={{ color: theme.white, background: theme.yellow, width: "100%" }}
+						onClick={handleSubmit(handleConfirmOrder)}
+					>
+						Confirmar pedido
+					</Button>
+					{/* </NavLink> */}
 				</Order>
 			</Wrapper>
 		</MainContainer>

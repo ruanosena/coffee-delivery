@@ -46,6 +46,29 @@ export const CardSubtitle = styled.h5`
 	font-weight: normal;
 `;
 
+export const CardForm = styled.form`
+	display: flex;
+	flex-wrap: wrap;
+	row-gap: 1rem;
+	column-gap: 0.75rem;
+`;
+
+export const Input = styled.input`
+	padding: 0.75rem;
+	border: 1px solid ${(props) => props.theme["base-button"]};
+	border-radius: 4px;
+	font-size: 0.875rem;
+	color: ${(props) => props.theme["base-text"]};
+	background: ${(props) => props.theme["base-input"]};
+	z-index: 0;
+
+	&::placeholder {
+		font-size: 0.875rem;
+		color: ${(props) => props.theme["base-label"]};
+	}
+`;
+
+
 export const CardBody = styled.div`
 	display: flex;
 	flex-wrap: wrap;
@@ -77,9 +100,9 @@ export const CheckoutSection = styled.div`
 `;
 
 const CheckoutItem = styled.div`
-  display: flex;
-  justify-content: space-between;
-`
+	display: flex;
+	justify-content: space-between;
+`;
 
 export const CheckoutItemHighlight = styled(CheckoutItem)`
 	font-size: 0.875rem;
@@ -88,5 +111,5 @@ export const CheckoutItemHighlight = styled(CheckoutItem)`
 export const CheckoutItemFeatured = styled(CheckoutItem)`
 	font-size: 1.25rem;
 	font-weight: bold;
-  color: ${props => props.theme["base-subtitle"]}
+	color: ${(props) => props.theme["base-subtitle"]};
 `;

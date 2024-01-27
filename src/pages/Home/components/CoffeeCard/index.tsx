@@ -57,7 +57,12 @@ export function CoffeeCard({ coffee }: CoffeeCardProps) {
 				</Price>
 				<Actions>
 					<CounterInput min={1} initialCount={quantity} onChangeValue={setQuantity} />
-					<CartButton isAdding={isAdding} icon={ShoppingCart} onClick={addProductToCart} />
+					<CartButton
+						isAdding={isAdding}
+						disabled={isAdding}
+						icon={ShoppingCart}
+						onClick={addProductToCart}
+					/>
 				</Actions>
 			</CardFooter>
 		</CardContainer>
