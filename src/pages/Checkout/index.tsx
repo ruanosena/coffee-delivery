@@ -24,8 +24,22 @@ import { Button } from "../../components/Button";
 import { CartContext } from "../../contexts/CartContext";
 import { CurrencyFormatter } from "../../utils/CurrencyFormatter";
 import { useForm } from "react-hook-form";
+import * as zod from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 type PaymentMethods = "credit_card" | "debit_card" | "money";
+
+const deliveryFormValidationSchema = zod.object({
+	cep: zod.string().min(1, "Informe o CEP"),
+	rua: zod.string().min(1, "Informe a Rua"),
+	numero: zod.string().min(1, "Informe um número válido"),
+	complemento: zod.string().optional(),
+	bairro: zod.string().min(1, "Informe o bairro"),
+	cidade: zod.string().min(1, "Informe a cidade"),
+	uf: zod.string().min(1, "Informe a unidade federativa"),
+});
+
+type DeliveryFormData = zod.infer<typeof deliveryFormValidationSchema>;
 
 export function Checkout() {
 	const [paymentMethod, setPaymentMethod] = useState<PaymentMethods>();
@@ -33,10 +47,12 @@ export function Checkout() {
 	const theme = useTheme();
 	const { cart, cartTotalPrice } = useContext(CartContext);
 	const navigate = useNavigate();
-	const { register, handleSubmit } = useForm();
+	const { register, handleSubmit } = useForm<DeliveryFormData>({
+		resolver: zodResolver(deliveryFormValidationSchema),
+	});
 
-	function handleConfirmOrder(data: any) {
-		console.log(data);
+	function handleConfirmOrder(data: DeliveryFormData) {
+		console.log(data, paymentMethod);
 		navigate("/order");
 	}
 
